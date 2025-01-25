@@ -40,7 +40,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 USER appuser
 
 # Copy the source code into the container.
-COPY src /src
+COPY src/ src/
 
 # Expose the port that the application listens on.
 EXPOSE 8961
