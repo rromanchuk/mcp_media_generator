@@ -130,7 +130,7 @@ def create_server():
                 types.ImageContent(
                     type="image",
                     data= result_image,
-                    mimeType="image/jpeg"
+                    mimeType="image/png"
                 )
             ]
 
