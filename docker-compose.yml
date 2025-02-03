@@ -1,7 +1,7 @@
 services:
-  Media_creator:
+  media_creator:
     image: georgx22/mcp-media-creator:latest
-    container_name: MCP Media Creator
+    container_name: mcp-media-creator
     restart: always
     ports:
       - "8961:8961"
