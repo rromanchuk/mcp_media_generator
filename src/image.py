@@ -1,6 +1,10 @@
 import boto3
 import json
 import os
+import base64
+import io
+
+from src.upload_image import upload_file_to_s3
 
 # Import environment variables
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
@@ -55,4 +59,12 @@ async def create_image(prompt,negative_prompt, quality, width, height, seed_valu
     # Extract the first image
     base64_image = response_body.get("images")[0]
 
-    return base64_image
+    # Decode the Base64 string into bytes
+    image_data = base64.b64decode(base64_image)
+
+    # Create a file-like object from the bytes
+    image_file = io.BytesIO(image_data)
+
+    url = upload_file_to_s3(image_file)
+
+    return f"The image URL is {url}. Display the image to user in response via markdown ![alt text](image URL) syntax and also separately provide URL as link in markdown for download."

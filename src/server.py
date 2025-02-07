@@ -59,14 +59,14 @@ def create_server():
                         },
                         "height": {
                             "type": "integer",
-                            "description": "Height of the image.",
+                            "description": "Height of the image. Ratio of image must be between 1:4 to 4:1",
                             "default": 1024,
                             "minimum": 320,
                             "maximum": 4096
                         },
                         "width": {
                             "type": "integer",
-                            "description": "Width of the image.",
+                            "description": "Width of the image. Ratio of image must be between 1:4 to 4:1",
                             "default": 1024,
                             "minimum": 320,
                             "maximum": 4096
@@ -124,15 +124,15 @@ def create_server():
             if not prompt:
                 raise ValueError("Missing prompt parameter")
 
-            result_image = await create_image(prompt, negative_prompt, quality, width, height, seed_value)
+            formatted_response = await create_image(prompt, negative_prompt, quality, width, height, seed_value)
 
             return [
-                types.ImageContent(
-                    type="image",
-                    data= result_image,
-                    mimeType="image/png"
+                types.TextContent(
+                    type="text",
+                    text=formatted_response
                 )
             ]
+
 
         elif name == "create-video":
 
