@@ -6,8 +6,7 @@ import os
 MODEL_ID = "amazon.nova-reel-v1:0"
 S3_DESTINATION_BUCKET = os.environ.get("S3_BUCKET")
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
 
 async def create_video(prompt):
     """
@@ -18,7 +17,7 @@ async def create_video(prompt):
     """
 
     # Initiate Bedrock Client
-    bedrock_runtime = boto3.client("bedrock-runtime", region_name=AWS_REGION, aws_access_key_id =AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    bedrock_runtime = boto3.client("bedrock-runtime", region_name=AWS_REGION)
 
     # Set video parameters
     model_input = {
@@ -44,9 +43,7 @@ async def create_video(prompt):
     s3_prefix = invocation_arn.split('/')[-1]
 
     # Initiate S3 Client
-    s3_client = boto3.client('s3', region_name=AWS_REGION, aws_access_key_id=AWS_ACCESS_KEY_ID,
-                             aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-                             endpoint_url=f'https://s3.{AWS_REGION}.amazonaws.com')
+    s3_client = boto3.client('s3', region_name=AWS_REGION)
 
     # Get pre-signed URL for the video to be generated
     url = s3_client.generate_presigned_url('get_object',
