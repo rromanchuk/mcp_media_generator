@@ -4,7 +4,7 @@ import os
 import base64
 import io
 
-from src.upload_image import upload_file_to_s3
+from upload_image import upload_file_to_s3
 
 # Import environment variables
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
