@@ -22,19 +22,13 @@ def upload_file_to_s3(file_object):
     :param file_object: File-like object to upload
     :return: Pre-signed URL string if successful, else None
     """
-    aws_access_key_id = os.environ["AWS_ACCESS_KEY"]
-    aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
-    aws_region= os.environ['AWS_REGION']
+    aws_region = os.environ['AWS_REGION']
     aws_bucket = os.environ["S3_BUCKET"]
-
-    if not aws_bucket or not aws_region or not aws_access_key_id or not aws_secret_access_key:
-        raise NoCredentialsError()
 
     object_name = generate_unique_object_name()
 
     # Create an S3 client
-    s3_client = boto3.client('s3', region_name=aws_region, aws_access_key_id= aws_access_key_id,
-    aws_secret_access_key= aws_secret_access_key, endpoint_url=f'https://s3.{aws_region}.amazonaws.com')
+    s3_client = boto3.client('s3', region_name=aws_region)
 
     try:
         # Upload the file to S3
@@ -49,9 +43,6 @@ def upload_file_to_s3(file_object):
 
     except FileNotFoundError:
         print(f"The file {file_object} was not found.")
-        return None
-    except NoCredentialsError:
-        print("AWS credentials are not available.")
         return None
     except ClientError as e:
         print(f"Client error: {e}")
