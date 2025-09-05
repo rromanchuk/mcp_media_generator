@@ -9,8 +9,7 @@ from upload_image import upload_file_to_s3
 # Import environment variables
 AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
 MODEL_ID = "amazon.nova-canvas-v1:0"
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
 
 async def create_image(prompt,negative_prompt, quality, width, height, seed_value):
     """
