@@ -22,11 +22,8 @@ def upload_file_to_s3(file_object):
     :param file_object: File-like object to upload
     :return: Pre-signed URL string if successful, else None
     """
-    aws_region= os.environ['AWS_REGION']
+    aws_region = os.environ['AWS_REGION']
     aws_bucket = os.environ["S3_BUCKET"]
-
-    if not aws_bucket or not aws_region:
-        raise NoCredentialsError()
 
     object_name = generate_unique_object_name()
 
@@ -46,9 +43,6 @@ def upload_file_to_s3(file_object):
 
     except FileNotFoundError:
         print(f"The file {file_object} was not found.")
-        return None
-    except NoCredentialsError:
-        print("AWS credentials are not available.")
         return None
     except ClientError as e:
         print(f"Client error: {e}")
