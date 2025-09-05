@@ -27,14 +27,13 @@ def upload_file_to_s3(file_object):
     aws_region= os.environ['AWS_REGION']
     aws_bucket = os.environ["S3_BUCKET"]
 
-    if not aws_bucket or not aws_region or not aws_access_key_id or not aws_secret_access_key:
+    if not aws_bucket or not aws_region:
         raise NoCredentialsError()
 
     object_name = generate_unique_object_name()
 
     # Create an S3 client
-    s3_client = boto3.client('s3', region_name=aws_region, aws_access_key_id= aws_access_key_id,
-    aws_secret_access_key= aws_secret_access_key, endpoint_url=f'https://s3.{aws_region}.amazonaws.com')
+    s3_client = boto3.client('s3', region_name=aws_region)
 
     try:
         # Upload the file to S3
