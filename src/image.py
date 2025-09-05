@@ -26,7 +26,7 @@ async def create_image(prompt,negative_prompt, quality, width, height, seed_valu
     """
 
     # Initiate Bedrock Client
-    bedrock = boto3.client("bedrock-runtime", region_name=AWS_REGION, aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+    bedrock = boto3.client("bedrock-runtime", region_name=AWS_REGION)
 
     # Set picture parameters
     model_input = json.dumps({
